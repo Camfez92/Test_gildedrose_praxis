@@ -69,8 +69,105 @@ public class ItemServiceTest {
     }
 
 
+    @Test
+    public void testUpdateQualityOfAgedTypeItem(){
+        var item = new Item( 0, "Wine", 100, 30, Item.Type.AGED);
+
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Wine", itemsUpdated.get(0).name);
+        assertEquals(99, itemsUpdated.get(0).sellIn);
+        assertEquals(31, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.AGED, itemsUpdated.get(0).type);
+        verify(itemRepository,times(1)).save(any());
+    }
 
 
+    @Test
+    public void testUpdateQualityOfTicketsTypeItemBetween6And10Days(){
+        var item = new Item( 0, "Bullfighting", 9, 45, Item.Type.TICKETS);
+
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Bullfighting", itemsUpdated.get(0).name);
+        assertEquals(8, itemsUpdated.get(0).sellIn);
+        assertEquals(47, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.TICKETS, itemsUpdated.get(0).type);
+        verify(itemRepository,times(1)).save(any());
+    }
+
+    @Test
+    public void testUpdateQualityOfTicketsTypeItemBetween0And5Days(){
+        var item = new Item( 0, "Jamming", 4, 2, Item.Type.TICKETS);
+
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Jamming", itemsUpdated.get(0).name);
+        assertEquals(3, itemsUpdated.get(0).sellIn);
+        assertEquals(5, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.TICKETS, itemsUpdated.get(0).type);
+        verify(itemRepository,times(1)).save(any());
+    }
+
+
+    @Test
+    public void testUpdateQualityOfNormalTypeItemWhenSellingLessThan0(){
+        var item = new Item( 0, "Apple", -1, 5, Item.Type.NORMAL);
+
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Apple", itemsUpdated.get(0).name);
+        assertEquals(-2, itemsUpdated.get(0).sellIn);
+        assertEquals(3, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.NORMAL, itemsUpdated.get(0).type);
+        verify(itemRepository,times(1)).save(any());
+    }
+
+
+    @Test
+    public void testUpdateQualityOfTicketsTypeItemWhenSellingLessThan0(){
+        var item = new Item( 0, "Residente´s concert", -5, 40, Item.Type.TICKETS);
+
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Residente´s concert", itemsUpdated.get(0).name);
+        assertEquals(-6, itemsUpdated.get(0).sellIn);
+        assertEquals(0, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.TICKETS, itemsUpdated.get(0).type);
+        verify(itemRepository,times(1)).save(any());
+    }
+
+
+    @Test
+    public void testUpdateQualityOfAgedTypeItemWhenSellingLessThan0(){
+        var item = new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
+
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Red Ron", itemsUpdated.get(0).name);
+        assertEquals(-41, itemsUpdated.get(0).sellIn);
+        assertEquals(43, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.AGED, itemsUpdated.get(0).type);
+        verify(itemRepository,times(1)).save(any());
+    }
 
 
 
