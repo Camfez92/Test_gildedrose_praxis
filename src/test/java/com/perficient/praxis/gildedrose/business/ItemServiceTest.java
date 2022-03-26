@@ -71,6 +71,13 @@ public class ItemServiceTest {
 
 
     @Test
+    /**
+     * GIVEN a valid aged type item in the database
+     * WHEN updateQuality method is called
+     * THEN the service should update the quality and sellIn values,
+     * sellin decrease by 1 and quality increases by 1
+     * if sellin is less than 10, quaility increases by 1
+     */
     public void testUpdateQualityOfAgedTypeItem(){
         var item = new Item( 0, "Wine", 100, 30, Item.Type.AGED);
 
@@ -88,6 +95,13 @@ public class ItemServiceTest {
 
 
     @Test
+    /**
+     * GIVEN a valid ticket type item in the database
+     * WHEN updateQuality method is called
+     * THEN the service should update the quality and sellIn values,
+     * sellin decrease by 1 and quality increases by 1
+     * if sellin is (6,10), quality increases by 1
+     */
     public void testUpdateQualityOfTicketsTypeItemBetween6And10Days(){
         var item = new Item( 0, "Bullfighting", 9, 45, Item.Type.TICKETS);
 
@@ -104,6 +118,14 @@ public class ItemServiceTest {
     }
 
     @Test
+    /**
+     * GIVEN a valid ticket type item in the database
+     * WHEN updateQuality method is called
+     * THEN the service should update the quality and sellIn values,
+     * sellin decrease by 1 and quality increases by 1
+     * if sellin is (0,5), quality increases by 2
+     * if sellin is 0, then quality drops to 0
+     */
     public void testUpdateQualityOfTicketsTypeItemBetween0And5Days(){
         var item = new Item( 0, "Jamming", 4, 2, Item.Type.TICKETS);
 
@@ -121,6 +143,12 @@ public class ItemServiceTest {
 
 
     @Test
+    /**
+     * GIVEN a valid normal type item in the database with sellin less than 0
+     * WHEN updateQuality method is called
+     * THEN the service should update the quality and sellIn values,
+     * sellin decrease by 1 and quality decreases by 2
+     */
     public void testUpdateQualityOfNormalTypeItemWhenSellingLessThan0(){
         var item = new Item( 0, "Apple", -1, 5, Item.Type.NORMAL);
 
@@ -138,6 +166,12 @@ public class ItemServiceTest {
 
 
     @Test
+    /**
+     * GIVEN a valid ticket type item in the database with sellin less than 0
+     * WHEN updateQuality method is called
+     * THEN the service should update the quality and sellIn values,
+     * sellin decrease by 1 and quality drops to 0
+     */
     public void testUpdateQualityOfTicketsTypeItemWhenSellingLessThan0(){
         var item = new Item( 0, "Residente´s concert", -5, 40, Item.Type.TICKETS);
 
@@ -155,6 +189,12 @@ public class ItemServiceTest {
 
 
     @Test
+    /**
+     * GIVEN a valid normal type item in the database with sellin less than 0
+     * WHEN updateQuality method is called
+     * THEN the service should update the quality and sellIn values,
+     * sellin decrease by 1 and quality increases by 2
+     */
     public void testUpdateQualityOfAgedTypeItemWhenSellingLessThan0(){
         var item = new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
 
@@ -170,6 +210,11 @@ public class ItemServiceTest {
         verify(itemRepository,times(1)).save(any());
     }
 @Test
+/**
+     * GIVEN a valid item
+     * WHEN createItem method is called
+     * THEN the item should be saved in the database,
+     */
 public void TestCreateItem(){
 
     var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
@@ -179,6 +224,10 @@ public void TestCreateItem(){
     verify(itemRepository,times(1)).save(any());
 }
 @Test
+/**
+     * WHEN listItems method is called
+     * THEN a list of all items in the database should appear,
+*/
 public void testListItems(){
     var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
     when(itemRepository.findAll()).thenReturn(List.of(item));
