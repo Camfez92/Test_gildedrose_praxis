@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -168,8 +169,22 @@ public class ItemServiceTest {
         assertEquals(Item.Type.AGED, itemsUpdated.get(0).type);
         verify(itemRepository,times(1)).save(any());
     }
+@Test
+public void TestCreateItem(){
 
-
+    var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
+            
+    when(itemRepository.save(item)).thenReturn(item);
+    assertEquals(item,itemService.createItem(item));
+    verify(itemRepository,times(1)).save(any());
+}
+@Test
+public void testListItems(){
+    var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
+    when(itemRepository.findAll()).thenReturn(List.of(item));
+    List<Item> itemsUpdated = itemService.listItems();
+    assertEquals(item, itemsUpdated.get(0));
+}
 
 
 
