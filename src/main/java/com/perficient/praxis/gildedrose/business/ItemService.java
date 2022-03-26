@@ -85,7 +85,7 @@ public class ItemService {
 
     public Item updateItem(int id, Item item) {
         if (!(itemRepository.existsById(id))) {
-            throw new ResourceNotFoundException("");
+            throw new ResourceNotFoundException("The Item to get updated must exist");
         }
         return itemRepository.save(new Item(id, item.name, item.sellIn, item.quality, item.type));
     }

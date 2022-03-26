@@ -209,32 +209,70 @@ public class ItemServiceTest {
         assertEquals(Item.Type.AGED, itemsUpdated.get(0).type);
         verify(itemRepository,times(1)).save(any());
     }
-@Test
-/**
-     * GIVEN a valid item
-     * WHEN createItem method is called
-     * THEN the item should be saved in the database,
+    @Test
+    /**
+         * GIVEN a valid item
+         * WHEN createItem method is called
+         * THEN the item should be saved in the database,
+         */
+    public void TestCreateItem(){
+
+        var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
+
+        when(itemRepository.save(item)).thenReturn(item);
+        assertEquals(item,itemService.createItem(item));
+        verify(itemRepository,times(1)).save(any());
+    }
+    @Test
+    /**  * GIVEN a list of items
+         * WHEN listItems method is called
+         * THEN a list of all items in the database should appear,
+    */
+    public void testListItems(){
+        var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
+        when(itemRepository.findAll()).thenReturn(List.of(item));
+        List<Item> itemsUpdated = itemService.listItems();
+        assertEquals(item, itemsUpdated.get(0));
+    }
+
+    @Test
+    /**
+     * GIVEN an item that is saved in the database
+     * WHEN updateItem method is called
+     * THEN the item should have the parameters of the new one
      */
-public void TestCreateItem(){
+    public void testUpdateItemWhenItExists(){
+        Item newVersionItem = new Item( 0, "Bag of Arepas", 5, 49, Item.Type.NORMAL);
 
-    var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
-            
-    when(itemRepository.save(item)).thenReturn(item);
-    assertEquals(item,itemService.createItem(item));
-    verify(itemRepository,times(1)).save(any());
-}
-@Test
-/**
-     * WHEN listItems method is called
-     * THEN a list of all items in the database should appear,
-*/
-public void testListItems(){
-    var item=new Item( 0, "Red Ron", -40, 41, Item.Type.AGED);
-    when(itemRepository.findAll()).thenReturn(List.of(item));
-    List<Item> itemsUpdated = itemService.listItems();
-    assertEquals(item, itemsUpdated.get(0));
-}
+        when(itemRepository.findAll()).thenReturn(List.of(newVersionItem));
+        when(itemRepository.existsById(0)).thenReturn(true);
 
+        itemService.updateItem(0, newVersionItem);
 
+        List<Item> itemsUpdated = itemService.updateQuality();
+
+        assertEquals(0, itemsUpdated.get(0).getId());
+        assertEquals("Bag of Arepas", itemsUpdated.get(0).name);
+        assertEquals(4, itemsUpdated.get(0).sellIn);
+        assertEquals(48, itemsUpdated.get(0).quality);
+        assertEquals(Item.Type.NORMAL, itemsUpdated.get(0).type);
+        verify(itemRepository,times(2)).save(any());
+    }
+
+    @Test
+    /**
+    * GIVEN an item that is not saved in the database
+    * WHEN updateItem method is called
+    * THEN an ResourceNotFoundException should be thrown
+    */
+    public void testUpdateItemWhenItDoesNotExists(){
+        Item newVersionItem = new Item( 0, "Bag of Arepas", 5, 49, Item.Type.NORMAL);
+
+        when(itemRepository.findAll()).thenReturn(List.of(newVersionItem));
+        when(itemRepository.existsById(0)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () ->
+                itemService.updateItem(0, newVersionItem));
+    }
 
 }
