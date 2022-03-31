@@ -14,7 +14,7 @@ public class ItemTest {
      * THEN a string with the item parameters should be return
      */
     public void testToString(){
-        Item item = new Item( 0, "Chocorramo", 30, 40, Item.Type.NORMAL);
+        Item item = new ItemNormal( 0, "Chocorramo", 30, 40);
 
         assertEquals("0, Chocorramo, 30, 40",item.toString());
     }
@@ -26,7 +26,7 @@ public class ItemTest {
      * THEN the item should change it´s id
      */
     public void testSetId(){
-        Item item = new Item( 0, "Chocorramo", 30, 40, Item.Type.NORMAL);
+        Item item = new Item( 0, "Chocorramo", 30, 40);
 
         item.setId(20);
         assertEquals(20,item.getId());
