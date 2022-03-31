@@ -71,6 +71,7 @@ public class ItemServiceTest {
         verify(itemRepository,times(1)).save(any());
     }
 
+
     @Test
     /**
      * GIVEN a valid aged type item in the database
@@ -276,10 +277,3 @@ public class ItemServiceTest {
     }
 
 }
-
-
-
-
-
-
-
