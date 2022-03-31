@@ -21,17 +21,17 @@ public class Item {
 
     public int quality;
 
-    public Type type;
+
 
     public Item() {
     }
 
-    public Item(int id, String name, int sellIn, int quality, Type type) {
+    public Item(int id, String name, int sellIn, int quality) {
         this.id = id;
         this.name = name;
         this.sellIn = sellIn;
         this.quality = quality;
-        this.type = type;
+
     }
 
     public int getId() {
@@ -42,15 +42,10 @@ public class Item {
         this.id = id;
     }
 
-    public enum Type {
-        AGED,
-        NORMAL,
-        LEGENDARY,
-        TICKETS
-    }
+    public void updateQuality(){}
 
     @Override
     public String toString() {
-        return this.id+ ", " +this.name + ", " + this.sellIn + ", " + this.quality;
+        return this.id+ ", " +this.name + ", " + this.sellIn;
     }
 }
