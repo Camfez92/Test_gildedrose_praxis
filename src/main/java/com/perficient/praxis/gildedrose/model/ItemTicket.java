@@ -8,6 +8,7 @@ public class ItemTicket extends Item {
     }
 
     public void updateQuality() {
+        this.sellIn=this.sellIn-1;
         if (this.quality < 50) {
             this.quality = this.quality + 1;
         }
@@ -15,9 +16,9 @@ public class ItemTicket extends Item {
             this.quality = this.quality - this.quality;
         }
         else if (this.sellIn < 6 && this.quality < 50) {
-            this.quality = this.quality + 1;
+            this.quality = this.quality + 2;
         }
-        else if (this.sellIn < 11 && this.quality < 50) {
+        else if(this.sellIn < 11 && this.quality < 50) {
             this.quality = this.quality + 1;
         }
 
