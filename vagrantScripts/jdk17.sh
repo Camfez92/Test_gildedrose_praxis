@@ -5,5 +5,5 @@ java -version
 export JAVA_HOME=/opt/jdk-17.0.1
 export PATH=$PATH:$JAVA_HOME/bin
 
-sudo apt install maven
+sudo apt install -y maven
 mvn -version

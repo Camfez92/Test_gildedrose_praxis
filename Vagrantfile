@@ -68,8 +68,9 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
 
-config.vm.provision "shell", path: "actualization.sh"
-config.vm.provision "shell", path: "jdk17.sh"
+config.vm.provision "shell", path: "vagrantScripts/actualization.sh"
+config.vm.provision "shell", path: "vagrantScripts/jdk17.sh"
+config.vm.provision "shell", path: "vagrantScripts/docker.sh"
 
 
 end
