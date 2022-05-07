@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -53,6 +54,12 @@ public class ItemController {
     public ResponseEntity<List<Item>> updateItemsQuality(){
         var items = itemService.updateQuality();
         return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Item> deleteItem(@PathVariable int id){
+        Item deleteItem = itemService.deleteItem(id);
+        return new ResponseEntity<>(deleteItem, HttpStatus.OK);
     }
 
 }
