@@ -53,4 +53,14 @@ public class ItemService {
         return itemRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException(""));
     }
+    
+    public Item deleteItem(int id) {
+        try {
+            Item item = findById(id);
+            itemRepository.delete(item);
+            return item;
+        } catch (ResourceNotFoundException e) {
+            throw e;
+        }
+    }
 }
