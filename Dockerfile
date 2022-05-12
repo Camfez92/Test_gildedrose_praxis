@@ -28,5 +28,5 @@ CMD ["mvn", "--version"]
 
 COPY ./out/artifacts/gildedrose_jar/gildedrose-0.0.1-SNAPSHOT.jar /usr/app/
 ENV  spring.datasource.url=jdbc:postgresql://172.17.0.2:5432/postgres
-EXPOSE 8080
+EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "gildedrose-0.0.1-SNAPSHOT.jar"]
