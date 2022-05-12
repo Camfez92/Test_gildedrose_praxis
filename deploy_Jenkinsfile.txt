@@ -1,0 +1,26 @@
+pipeline{
+    agent any
+    stages{
+        stage("Run the database image"){
+            steps{
+                sh "docker stop my-postgres || true && docker rm my-postgres || true"
+                sh "docker run --name my-postgres -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres"
+                sh "sleep 10"
+            }
+        }
+        stage("Run the backend image"){
+            steps{
+                sh "docker stop backend || true && docker rm backend || true"
+                sh "docker run --name backend -p 8081:8080 -d hangavi/hw5:backend"
+                sh "sleep 30"
+            }
+        }
+        stage("Run the frontend image"){
+            steps{
+                sh "docker stop frontend || true && docker rm frontend || true"
+                sh "docker run --name frontend -p 4200:4200 -d hangavi/hw5:frontend"
+                
+            }
+        }
+    }
+}
