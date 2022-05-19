@@ -12,6 +12,8 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_eip" "elastic_ip"{
-  vpc=true
-}
+#resource "aws_eip" "elastic_ip"{
+#  vpc=true
+#}
+
+

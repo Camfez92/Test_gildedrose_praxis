@@ -27,4 +27,5 @@ sudo usermod -aG docker ubuntu
 sudo newgrp docker
 
 ## Restart Jenkins to load docker access
+cat /var/lib/jenkins/secrets/initialAdminPassword
 sudo service jenkins restart
